@@ -7,14 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static HelthCarePlus.DatabaseHelper;
 
 namespace HelthCarePlus
 {
     public partial class manage_doctors : Form
     {
+
+        private DatabaseHelper dbHelper;
         public manage_doctors()
         {
             InitializeComponent();
+            dbHelper = new DatabaseHelper();    
+        }
+
+
+        public void doctors_load(object sender, EventArgs e)
+        {
+            List<Doctor> doctors = dbHelper.GetAllDoctors();
+
+            grid_doctors.DataSource = doctors;
         }
 
         private void btn_add_new_doctor_Click(object sender, EventArgs e)

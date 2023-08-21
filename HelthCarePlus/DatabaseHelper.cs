@@ -179,6 +179,7 @@ namespace HelthCarePlus
 
         public class Doctor
         {
+            public int Id { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public string Contact { get; set; }
@@ -263,7 +264,7 @@ namespace HelthCarePlus
 
                     {
                         string query = "INSERT INTO schedule (doc_id, day_id) VALUES (@doctorId, @dayId)";
-                        MessageBox.Show(dayId.ToString());
+                      
                         MySqlCommand command = new MySqlCommand(query, connection);
                         command.Parameters.AddWithValue("@doctorId", doctorId);
                         command.Parameters.AddWithValue("@dayId", dayId);
@@ -337,7 +338,50 @@ namespace HelthCarePlus
             return users;
         }
 
+        public List<Doctor> GetAllDoctors()
+        {
+            List<Doctor> doctors = new List<Doctor>();
 
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "SELECT id, first_name, last_name, contact, specialize FROM doctor";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int doctorId = Convert.ToInt32(reader["id"]);
+                            string firstName = reader["first_name"].ToString();
+                            string lastName = reader["last_name"].ToString();
+                            string contact = reader["contact"].ToString();
+                            string specialize = reader["specialize"].ToString();
+
+                            Doctor doctor = new Doctor
+                            {
+                                Id = doctorId,
+                                FirstName = firstName,
+                                LastName = lastName,
+                                Contact = contact,
+                                Specialize = specialize
+                            };
+
+                            doctors.Add(doctor);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+              
+                }
+            }
+
+            return doctors;
+        }
 
 
 

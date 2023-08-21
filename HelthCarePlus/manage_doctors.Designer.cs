@@ -30,9 +30,9 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.btn_download = new System.Windows.Forms.Button();
-            this.grid_users = new System.Windows.Forms.DataGridView();
+            this.grid_doctors = new System.Windows.Forms.DataGridView();
             this.btn_add_new_doctor = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.grid_users)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grid_doctors)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -56,13 +56,13 @@
             this.btn_download.Text = "Download";
             this.btn_download.UseVisualStyleBackColor = true;
             // 
-            // grid_users
+            // grid_doctors
             // 
-            this.grid_users.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid_users.Location = new System.Drawing.Point(82, 63);
-            this.grid_users.Name = "grid_users";
-            this.grid_users.Size = new System.Drawing.Size(637, 278);
-            this.grid_users.TabIndex = 9;
+            this.grid_doctors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grid_doctors.Location = new System.Drawing.Point(82, 63);
+            this.grid_doctors.Name = "grid_doctors";
+            this.grid_doctors.Size = new System.Drawing.Size(637, 278);
+            this.grid_doctors.TabIndex = 9;
             // 
             // btn_add_new_doctor
             // 
@@ -83,11 +83,12 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.btn_add_new_doctor);
             this.Controls.Add(this.btn_download);
-            this.Controls.Add(this.grid_users);
+            this.Controls.Add(this.grid_doctors);
             this.Controls.Add(this.label1);
             this.Name = "manage_doctors";
             this.Text = "ManageDoctors";
-            ((System.ComponentModel.ISupportInitialize)(this.grid_users)).EndInit();
+            this.Load += new System.EventHandler(this.doctors_load);
+            ((System.ComponentModel.ISupportInitialize)(this.grid_doctors)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -97,7 +98,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btn_download;
-        private System.Windows.Forms.DataGridView grid_users;
+        private System.Windows.Forms.DataGridView grid_doctors;
         private System.Windows.Forms.Button btn_add_new_doctor;
     }
 }

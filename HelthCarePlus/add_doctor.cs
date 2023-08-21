@@ -64,8 +64,10 @@ namespace HelthCarePlus
                     selectedDayIds.Add(7);
                 }
 
-                dbHelper.InsertScheduleData(id, selectedDayIds);  
-                MessageBox.Show("Insert Completed"+ id);
+                dbHelper.InsertScheduleData(id, selectedDayIds);
+                manage_doctors manage_Doctors = new manage_doctors();
+                manage_Doctors.Show();
+                this.Hide();
             }
             else
             {
