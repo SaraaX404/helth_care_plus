@@ -32,6 +32,7 @@
             this.btn_download = new System.Windows.Forms.Button();
             this.grid_doctors = new System.Windows.Forms.DataGridView();
             this.btn_add_new_doctor = new System.Windows.Forms.Button();
+            this.back = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grid_doctors)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,12 +76,24 @@
             this.btn_add_new_doctor.UseVisualStyleBackColor = true;
             this.btn_add_new_doctor.Click += new System.EventHandler(this.btn_add_new_doctor_Click);
             // 
+            // back
+            // 
+            this.back.ForeColor = System.Drawing.Color.MediumTurquoise;
+            this.back.Location = new System.Drawing.Point(82, 394);
+            this.back.Name = "back";
+            this.back.Size = new System.Drawing.Size(112, 31);
+            this.back.TabIndex = 12;
+            this.back.Text = "Back";
+            this.back.UseVisualStyleBackColor = true;
+            this.back.Click += new System.EventHandler(this.back_Click);
+            // 
             // manage_doctors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MediumTurquoise;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.back);
             this.Controls.Add(this.btn_add_new_doctor);
             this.Controls.Add(this.btn_download);
             this.Controls.Add(this.grid_doctors);
@@ -100,5 +113,6 @@
         private System.Windows.Forms.Button btn_download;
         private System.Windows.Forms.DataGridView grid_doctors;
         private System.Windows.Forms.Button btn_add_new_doctor;
+        private System.Windows.Forms.Button back;
     }
 }

@@ -101,6 +101,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="add_patient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="add_patient.Designer.cs">
+      <DependentUpon>add_patient.cs</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseHelper.cs" />
     <Compile Include="admin_landing.cs">
       <SubType>Form</SubType>
@@ -119,6 +125,12 @@
     </Compile>
     <Compile Include="manage_doctors.Designer.cs">
       <DependentUpon>manage_doctors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="manage_patients .cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="manage_patients .Designer.cs">
+      <DependentUpon>manage_patients .cs</DependentUpon>
     </Compile>
     <Compile Include="manage_users.cs">
       <SubType>Form</SubType>
@@ -146,6 +158,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="add_patient.resx">
+      <DependentUpon>add_patient.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="admin_landing.resx">
       <DependentUpon>admin_landing.cs</DependentUpon>
     </EmbeddedResource>
@@ -154,6 +169,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="manage_doctors.resx">
       <DependentUpon>manage_doctors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="manage_patients .resx">
+      <DependentUpon>manage_patients .cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="manage_users.resx">
       <DependentUpon>manage_users.cs</DependentUpon>

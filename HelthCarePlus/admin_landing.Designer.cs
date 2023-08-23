@@ -67,6 +67,7 @@
             this.btn_manage_paitents.TabIndex = 23;
             this.btn_manage_paitents.Text = "Manage Paitents";
             this.btn_manage_paitents.UseVisualStyleBackColor = true;
+            this.btn_manage_paitents.Click += new System.EventHandler(this.btn_manage_paitents_Click);
             // 
             // AdminLanding
             // 

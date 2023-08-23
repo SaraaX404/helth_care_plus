@@ -31,6 +31,7 @@
             this.grid_users = new System.Windows.Forms.DataGridView();
             this.btn_download = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grid_users)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,9 +47,9 @@
             // btn_download
             // 
             this.btn_download.ForeColor = System.Drawing.Color.MediumTurquoise;
-            this.btn_download.Location = new System.Drawing.Point(55, 357);
+            this.btn_download.Location = new System.Drawing.Point(517, 23);
             this.btn_download.Name = "btn_download";
-            this.btn_download.Size = new System.Drawing.Size(637, 31);
+            this.btn_download.Size = new System.Drawing.Size(175, 31);
             this.btn_download.TabIndex = 6;
             this.btn_download.Text = "Download";
             this.btn_download.UseVisualStyleBackColor = true;
@@ -66,12 +67,24 @@
             this.label1.Text = "USERS LIST";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
+            // button1
+            // 
+            this.button1.ForeColor = System.Drawing.Color.MediumTurquoise;
+            this.button1.Location = new System.Drawing.Point(55, 359);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(172, 31);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "Back";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // ManageUsers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MediumTurquoise;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_download);
             this.Controls.Add(this.grid_users);
@@ -89,5 +102,6 @@
         private System.Windows.Forms.DataGridView grid_users;
         private System.Windows.Forms.Button btn_download;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button1;
     }
 }

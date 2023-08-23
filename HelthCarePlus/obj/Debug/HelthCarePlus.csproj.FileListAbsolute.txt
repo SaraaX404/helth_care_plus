@@ -49,3 +49,5 @@ C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.
 C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.ManageUsers.resources
 C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.add_doctor.resources
 C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.manage_doctors.resources
+C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.add_patient.resources
+C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.manage_patients.resources

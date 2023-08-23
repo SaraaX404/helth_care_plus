@@ -44,5 +44,12 @@ namespace HelthCarePlus
             manageUsers.Show(); 
             this.Hide();
         }
+
+        private void btn_manage_paitents_Click(object sender, EventArgs e)
+        {
+            manage_patients manage_Patients = new manage_patients();
+            manage_Patients.Show();
+            this.Hide();
+        }
     }
 }

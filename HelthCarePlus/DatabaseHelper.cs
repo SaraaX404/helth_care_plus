@@ -383,6 +383,86 @@ namespace HelthCarePlus
             return doctors;
         }
 
+        public class Patient
+        {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string Contact { get; set; }
+            public int Age { get; set; }
+            public string Gender { get; set; }
+        }
+
+
+        public bool InsertPatientData(string firstName, string lastName, string contact, int age, string gender)
+        {
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "INSERT INTO patient (first_name, last_name, contact, age, gender) VALUES (@firstName, @lastName, @contact, @age, @gender)";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@firstName", firstName);
+                    command.Parameters.AddWithValue("@lastName", lastName);
+                    command.Parameters.AddWithValue("@contact", contact);
+                    command.Parameters.AddWithValue("@age", age);
+                    command.Parameters.AddWithValue("@gender", gender);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    MessageBox.Show(ex.ToString());
+                    return false;
+                }
+            }
+        }
+
+        public List<Patient> GetAllPatients()
+        {
+            List<Patient> patients = new List<Patient>();
+
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "SELECT first_name, last_name, contact, age, gender FROM patient";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string firstName = reader["first_name"].ToString();
+                            string lastName = reader["last_name"].ToString();
+                            string contact = reader["contact"].ToString();
+                            int age = Convert.ToInt32(reader["age"]);
+                            string gender = reader["gender"].ToString();
+
+                            Patient patient = new Patient
+                            {
+                                FirstName = firstName,
+                                LastName = lastName,
+                                Contact = contact,
+                                Age = age,
+                                Gender = gender
+                            };
+
+                            patients.Add(patient);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+
+            return patients;
+        }
 
 
     }
