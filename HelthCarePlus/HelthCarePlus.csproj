@@ -107,6 +107,12 @@
     <Compile Include="add_patient.Designer.cs">
       <DependentUpon>add_patient.cs</DependentUpon>
     </Compile>
+    <Compile Include="add_room.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="add_room.Designer.cs">
+      <DependentUpon>add_room.cs</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseHelper.cs" />
     <Compile Include="admin_landing.cs">
       <SubType>Form</SubType>
@@ -131,6 +137,12 @@
     </Compile>
     <Compile Include="manage_patients .Designer.cs">
       <DependentUpon>manage_patients .cs</DependentUpon>
+    </Compile>
+    <Compile Include="manage_rooms.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="manage_rooms.Designer.cs">
+      <DependentUpon>manage_rooms.cs</DependentUpon>
     </Compile>
     <Compile Include="manage_users.cs">
       <SubType>Form</SubType>
@@ -161,6 +173,9 @@
     <EmbeddedResource Include="add_patient.resx">
       <DependentUpon>add_patient.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="add_room.resx">
+      <DependentUpon>add_room.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="admin_landing.resx">
       <DependentUpon>admin_landing.cs</DependentUpon>
     </EmbeddedResource>
@@ -172,6 +187,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="manage_patients .resx">
       <DependentUpon>manage_patients .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="manage_rooms.resx">
+      <DependentUpon>manage_rooms.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="manage_users.resx">
       <DependentUpon>manage_users.cs</DependentUpon>

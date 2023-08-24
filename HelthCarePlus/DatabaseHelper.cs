@@ -464,6 +464,84 @@ namespace HelthCarePlus
             return patients;
         }
 
+        public bool InsertRoomData(int roomNumber, int price, int ac)
+        {
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string query = "INSERT INTO room (room_number, price, ac) VALUES (@roomNumber, @price, @ac)";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@roomNumber", roomNumber);
+                    command.Parameters.AddWithValue("@price", price);
+                    command.Parameters.AddWithValue("@ac", ac);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    MessageBox.Show(ex.ToString());
+                    return false;
+                }
+            }
+        }
+
+        public List<Room> GetAllRooms()
+        {
+            List<Room> rooms = new List<Room>();
+
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string query = "SELECT id, room_number, price, ac FROM room";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int roomId = Convert.ToInt32(reader["id"]);
+                            int roomNumber = Convert.ToInt32(reader["room_number"]);
+                            int price = Convert.ToInt32(reader["price"]);
+                            int ac = Convert.ToInt32(reader["ac"]);
+
+                            Room room = new Room
+                            {
+                                Id = roomId,
+                                RoomNumber = roomNumber,
+                                Price = price,
+                                Ac = ac
+                            };
+
+                            rooms.Add(room);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+
+            return rooms;
+        }
+
+        public class Room
+        {
+            public int Id { get; set; }
+            public int RoomNumber { get; set; }
+            public int Price { get; set; }
+            public int Ac { get; set; }
+        }
+
+
 
     }
 }
