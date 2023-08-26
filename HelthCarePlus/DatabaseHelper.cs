@@ -385,6 +385,8 @@ namespace HelthCarePlus
 
         public class Patient
         {
+
+            public int Id { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public string Contact { get; set; }
@@ -420,6 +422,84 @@ namespace HelthCarePlus
             }
         }
 
+        public bool IsTimeSlotBooked(int doctorId, DateTime date, string time)
+        {
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string query = "SELECT COUNT(*) FROM appointment WHERE doctor_id = @doctorId AND date = @date AND time = @time";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@doctorId", doctorId);
+                    command.Parameters.AddWithValue("@date", date.Date); // Use only the date portion
+                    command.Parameters.AddWithValue("@time", time);
+
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+                    return count > 0; // If count is greater than 0, the time slot is booked
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    MessageBox.Show(ex.ToString());
+                    return false; // Return false in case of an exception
+                }
+            }
+        }
+
+        public bool InsertAppointmentData(int patientId, int doctorId, DateTime date, string time)
+        {
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string query = "INSERT INTO appointment (patient_id, doctor_id, date, time) VALUES (@patientId, @doctorId, @date, @time)";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@patientId", patientId);
+                    command.Parameters.AddWithValue("@doctorId", doctorId);
+                    command.Parameters.AddWithValue("@date", date.Date); // Store only the date portion
+                    command.Parameters.AddWithValue("@time", time);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    MessageBox.Show(ex.ToString());
+                    return false;
+                }
+            }
+        }
+
+        public bool IsDoctorAvailableOnDay(int doctorId, int dayId)
+        {
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string query = "SELECT COUNT(*) FROM schedule WHERE doc_id = @doctorId AND day_id = @dayId";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@doctorId", doctorId);
+                    command.Parameters.AddWithValue("@dayId", dayId);
+
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+
+                    return count > 0; // If there are any records, the doctor is available
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    return false;
+                }
+            }
+        }
+
         public List<Patient> GetAllPatients()
         {
             List<Patient> patients = new List<Patient>();
@@ -429,7 +509,7 @@ namespace HelthCarePlus
                 try
                 {
                     connection.Open();
-                    string query = "SELECT first_name, last_name, contact, age, gender FROM patient";
+                    string query = "SELECT id, first_name, last_name, contact, age, gender FROM patient";
                     MySqlCommand command = new MySqlCommand(query, connection);
 
                     using (MySqlDataReader reader = command.ExecuteReader())
@@ -441,6 +521,7 @@ namespace HelthCarePlus
                             string contact = reader["contact"].ToString();
                             int age = Convert.ToInt32(reader["age"]);
                             string gender = reader["gender"].ToString();
+                            int id = Convert.ToInt32(reader["id"]);
 
                             Patient patient = new Patient
                             {
@@ -448,7 +529,8 @@ namespace HelthCarePlus
                                 LastName = lastName,
                                 Contact = contact,
                                 Age = age,
-                                Gender = gender
+                                Gender = gender,
+                                Id = id
                             };
 
                             patients.Add(patient);
@@ -540,6 +622,58 @@ namespace HelthCarePlus
             public int Price { get; set; }
             public int Ac { get; set; }
         }
+
+        public class Appointment
+        {
+            public int Id { get; set; }
+            public int DoctorId { get; set; }
+            public int PatientId { get; set; }
+            public DateTime AppointmentDate { get; set; }
+        }
+
+        public List<Appointment> GetAllAppointments()
+        {
+            List<Appointment> appointments = new List<Appointment>();
+
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "SELECT id, patient_id, doctor_id, date, time FROM appointment";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int appointmentId = Convert.ToInt32(reader["id"]);
+                            int patientId = Convert.ToInt32(reader["patient_id"]);
+                            int doctorId = Convert.ToInt32(reader["doctor_id"]);
+                            DateTime appointmentDate = Convert.ToDateTime(reader["date"]);
+                            TimeSpan appointmentTime = TimeSpan.Parse(reader["time"].ToString());
+
+                            Appointment appointment = new Appointment
+                            {
+                                Id = appointmentId,
+                                PatientId = patientId,
+                                DoctorId = doctorId,
+                                AppointmentDate = appointmentDate.Date + appointmentTime
+                            };
+
+                            appointments.Add(appointment);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+
+            return appointments;
+        }
+
 
 
 
