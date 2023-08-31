@@ -24,6 +24,14 @@ namespace HelthCarePlus
         private void LoadAppointments(object sender, EventArgs e)
         {
             List<Appointment> apps = dbHelper.GetAllAppointments();
+            
+
+            // Append the log messages to the TextBox
+            foreach (Appointment app in apps)
+            {
+                string logMessage = $"Appointment ID: {app.Id}, Patient: {app.PatientName}, Doctor: {app.DoctorName}, Date: {app.AppointmentDate}";
+                
+            }
             grid_apps.DataSource = apps;
         }
 

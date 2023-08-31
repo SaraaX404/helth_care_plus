@@ -55,3 +55,5 @@ C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.
 C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.add_room.resources
 C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.AddAppointments.resources
 C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.ManageAppointment.resources
+C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.ManageAdmits.resources
+C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.AddNewAdmit.resources

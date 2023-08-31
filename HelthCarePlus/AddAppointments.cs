@@ -203,7 +203,9 @@ namespace HelthCarePlus
                     {
                         // Successfully inserted the appointment
                         lblwarning.Visible = false; // Hide the warning label
-                        MessageBox.Show("Appointment added successfully.");
+                        ManageAppointment manageAppointment = new ManageAppointment();
+                        manageAppointment.Show();
+                        this.Hide();
                     }
                     else
                     {

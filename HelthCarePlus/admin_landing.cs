@@ -65,5 +65,12 @@ namespace HelthCarePlus
             manageAppointment.Show();
             this.Hide();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ManageAdmits manageAdmits = new ManageAdmits();
+            manageAdmits.Show();
+            this.Hide();
+        }
     }
 }

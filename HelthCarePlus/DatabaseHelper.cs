@@ -626,10 +626,179 @@ namespace HelthCarePlus
         public class Appointment
         {
             public int Id { get; set; }
-            public int DoctorId { get; set; }
-            public int PatientId { get; set; }
+            public string DoctorName { get; set; }
+            public string PatientName { get; set; }
             public DateTime AppointmentDate { get; set; }
+            public string AppointmentTime { get; set; }
         }
+
+        public class Admit
+        {
+            public int Id { get; set; }
+            public int PatientId { get; set; }
+            
+            public DateTime DateAdmitted { get; set; }
+            public string PatientFirstName { get; set; }
+            public string PatientLastName { get; set; }
+
+            public string ChargedStatus { get; set; }
+            public int RoomNumber { get; set; }
+           
+        }
+
+        public List<Admit> GetAllAdmitsWithDetails()
+        {
+            List<Admit> admits = new List<Admit>();
+
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = @"
+            SELECT a.id, a.patient_id, a.room_id, a.date_admitted, a.charged,
+                   p.first_name AS patient_first_name, p.last_name AS patient_last_name,
+                   r.room_number, r.ac
+            FROM admits AS a
+            JOIN patient AS p ON a.patient_id = p.id
+            JOIN room AS r ON a.room_id = r.id";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int admitId = Convert.ToInt32(reader["id"]);
+                            int patientId = Convert.ToInt32(reader["patient_id"]);
+                            int roomId = Convert.ToInt32(reader["room_id"]);
+                            DateTime dateAdmitted = Convert.ToDateTime(reader["date_admitted"]);
+                            int charged = Convert.ToInt32(reader["charged"]);
+                            string patientFirstName = reader["patient_first_name"].ToString();
+                            string patientLastName = reader["patient_last_name"].ToString();
+                            int roomNumber = Convert.ToInt32(reader["room_number"]);
+                            int roomAC = Convert.ToInt32(reader["ac"]);
+
+                            string chargedStatus = charged == 0 ? "Pending" : "Done";
+
+                            Admit admit = new Admit
+                            {
+                                Id = admitId,
+                                PatientId = patientId,
+                                DateAdmitted = dateAdmitted,
+                                ChargedStatus = chargedStatus, // Use the mapped value
+                                PatientFirstName = patientFirstName,
+                                PatientLastName = patientLastName,
+                                RoomNumber = roomNumber,
+                            };
+
+                            admits.Add(admit);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+
+            return admits;
+        }
+
+        public List<KeyValuePair<int, string>> GetPatientDataForComboBox()
+        {
+            List<KeyValuePair<int, string>> patientData = new List<KeyValuePair<int, string>>();
+
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string query = "SELECT id, CONCAT(first_name, ' ', last_name) AS full_name FROM patient";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int patientId = Convert.ToInt32(reader["id"]);
+                            string fullName = reader["full_name"].ToString();
+
+                            patientData.Add(new KeyValuePair<int, string>(patientId, fullName));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+
+            return patientData;
+        }
+
+        public List<KeyValuePair<int, string>> GetRoomDataForComboBox()
+        {
+            List<KeyValuePair<int, string>> roomData = new List<KeyValuePair<int, string>>();
+
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string query = "SELECT id, room_number FROM room";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int roomId = Convert.ToInt32(reader["id"]);
+                            string roomNumber = reader["room_number"].ToString();
+
+                            roomData.Add(new KeyValuePair<int, string>(roomId, "Room " + roomNumber));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+
+            return roomData;
+        }
+
+        public bool CreateAdmit(int patientId, int roomId)
+        {
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string query = "INSERT INTO admits (patient_id, room_id) VALUES (@patientId, @roomId)";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@patientId", patientId);
+                    command.Parameters.AddWithValue("@roomId", roomId);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    MessageBox.Show(ex.ToString());
+                    return false;
+                }
+            }
+        }
+
+
 
         public List<Appointment> GetAllAppointments()
         {
@@ -640,7 +809,10 @@ namespace HelthCarePlus
                 try
                 {
                     connection.Open();
-                    string query = "SELECT id, patient_id, doctor_id, date, time FROM appointment";
+                    string query = @"
+                SELECT a.id, a.patient_id, a.doctor_id, a.date, a.time, p.first_name as patient_first_name,p.last_name as patient_last_name, d.first_name as doctor_first_name, d.last_name as doctor_last_name FROM appointment AS a
+                JOIN patient AS p ON a.patient_id = p.id
+                JOIN doctor AS d ON a.doctor_id = d.id";
                     MySqlCommand command = new MySqlCommand(query, connection);
 
                     using (MySqlDataReader reader = command.ExecuteReader())
@@ -651,14 +823,21 @@ namespace HelthCarePlus
                             int patientId = Convert.ToInt32(reader["patient_id"]);
                             int doctorId = Convert.ToInt32(reader["doctor_id"]);
                             DateTime appointmentDate = Convert.ToDateTime(reader["date"]);
-                            TimeSpan appointmentTime = TimeSpan.Parse(reader["time"].ToString());
+                            string appointmentTime = reader["time"].ToString();
+                            string patientName = reader["patient_first_name"].ToString() + " " + reader["patient_last_name"].ToString();
+                            string doctorName = reader["doctor_first_name"].ToString() + " " + reader["doctor_last_name"].ToString();
+
+
+                            
 
                             Appointment appointment = new Appointment
                             {
+                               
                                 Id = appointmentId,
-                                PatientId = patientId,
-                                DoctorId = doctorId,
-                                AppointmentDate = appointmentDate.Date + appointmentTime
+                                AppointmentDate = appointmentDate.Date,
+                                AppointmentTime = appointmentTime,
+                                PatientName = patientName,
+                                DoctorName = doctorName
                             };
 
                             appointments.Add(appointment);
@@ -667,6 +846,7 @@ namespace HelthCarePlus
                 }
                 catch (Exception ex)
                 {
+                    MessageBox.Show(ex.Message);
                     Console.WriteLine(ex.ToString());
                 }
             }
