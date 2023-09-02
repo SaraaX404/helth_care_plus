@@ -43,7 +43,81 @@ namespace HelthCarePlus
             }
         }
 
-        
+        public class ResourceData
+        {
+            public int ID { get; set; }
+            public string Name { get; set; }
+            public DateTime CreateAt { get; set; }
+
+          
+        }
+
+        // Method to retrieve data from the "resource" table
+        public List<ResourceData> GetResourceData()
+        {
+            List<ResourceData> resourceData = new List<ResourceData>();
+
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT ID, Name, CreatedAt FROM resources";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32(0);
+                            string name = reader.GetString(1);
+                            DateTime createdAt = reader.GetDateTime(2);
+
+                            ResourceData data = new ResourceData
+                            {
+                                ID = id,
+                                Name = name,
+                                CreateAt = createdAt
+                            };
+
+                            resourceData.Add(data);
+                        }
+                    }
+                }
+            }
+
+            return resourceData;
+        }
+
+        public bool InsertResourceData(string name)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(_connectionString))
+                {
+                    connection.Open();
+
+                    string query = "INSERT INTO resources (Name) VALUES (@name)";
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@name", name);
+                    
+
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        // Check if the insertion was successful (1 row affected)
+                        return rowsAffected == 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+        }
+
 
         public Dictionary<int, string> GetRoleNames()
         {

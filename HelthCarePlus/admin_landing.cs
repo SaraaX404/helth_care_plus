@@ -72,5 +72,12 @@ namespace HelthCarePlus
             manageAdmits.Show();
             this.Hide();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ManageResources manageResources = new ManageResources();
+            manageResources.Show();
+            this.Hide();
+        }
     }
 }
