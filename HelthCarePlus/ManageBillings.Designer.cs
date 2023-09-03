@@ -38,13 +38,10 @@
             this.txt_pay = new System.Windows.Forms.TextBox();
             this.btn_add_new_resource = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label3 = new System.Windows.Forms.Label();
             this.lbl_res = new System.Windows.Forms.Label();
             this.data_grid = new System.Windows.Forms.DataGridView();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.data_grid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -156,25 +153,6 @@
             this.button1.Text = "Download Invoice";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(330, 240);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(441, 151);
-            this.dataGridView1.TabIndex = 24;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.Control;
-            this.label3.Location = new System.Drawing.Point(326, 197);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 24);
-            this.label3.TabIndex = 25;
-            this.label3.Text = "History";
-            // 
             // lbl_res
             // 
             this.lbl_res.AutoSize = true;
@@ -189,9 +167,9 @@
             // data_grid
             // 
             this.data_grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.data_grid.Location = new System.Drawing.Point(330, 92);
+            this.data_grid.Location = new System.Drawing.Point(330, 81);
             this.data_grid.Name = "data_grid";
-            this.data_grid.Size = new System.Drawing.Size(441, 98);
+            this.data_grid.Size = new System.Drawing.Size(441, 335);
             this.data_grid.TabIndex = 29;
             // 
             // button2
@@ -225,8 +203,6 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.data_grid);
             this.Controls.Add(this.lbl_res);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_add_new_resource);
             this.Controls.Add(this.txt_pay);
@@ -240,7 +216,6 @@
             this.Name = "ManageBillings";
             this.Text = "ManageBillings";
             this.Load += new System.EventHandler(this.ManageBillings_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.data_grid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -259,8 +234,6 @@
         private System.Windows.Forms.TextBox txt_pay;
         private System.Windows.Forms.Button btn_add_new_resource;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lbl_res;
         private System.Windows.Forms.DataGridView data_grid;
         private System.Windows.Forms.Button button2;

@@ -73,6 +73,9 @@ namespace HelthCarePlus
         {
             List<Appointment> app = dbHelper.GetAllAppointments();
             List<Appointment> pendingAppointments = app.Where(appointment => appointment.ChargedStatus == "Pending").ToList();
+            List<Appointment> doneAppointments = app.Where(appointment => appointment.ChargedStatus == "Done").ToList();
+
+            
 
             if (pendingAppointments.Count < 1)
             {
@@ -80,7 +83,11 @@ namespace HelthCarePlus
             }
 
             List<Admit> admits = dbHelper.GetAllAdmitsWithDetails();
+            List<Admit> doneAdmits = admits.Where(admit => admit.ChargedStatus == "Done").ToList();
             List<Admit> filteredAdmits = admits.Where(admit => admit.ChargedStatus == "Pending").ToList();
+
+            
+
 
             if (filteredAdmits.Count < 1)
             {
