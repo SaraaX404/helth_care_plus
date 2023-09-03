@@ -58,3 +58,4 @@ C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.
 C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.ManageAdmits.resources
 C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.AddNewAdmit.resources
 C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.ManageResources.resources
+C:\Users\saths\source\repos\HelthCarePlus\HelthCarePlus\obj\Debug\HelthCarePlus.ManageBillings.resources

@@ -46,6 +46,7 @@
             this.back.TabIndex = 19;
             this.back.Text = "Back";
             this.back.UseVisualStyleBackColor = true;
+            this.back.Click += new System.EventHandler(this.back_Click);
             // 
             // btn_download
             // 

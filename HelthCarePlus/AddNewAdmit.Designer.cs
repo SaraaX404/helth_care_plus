@@ -34,6 +34,7 @@
             this.select_room = new System.Windows.Forms.ComboBox();
             this.select_patient = new System.Windows.Forms.ComboBox();
             this.btn_addmit = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label3
@@ -88,7 +89,7 @@
             // btn_addmit
             // 
             this.btn_addmit.ForeColor = System.Drawing.Color.MediumTurquoise;
-            this.btn_addmit.Location = new System.Drawing.Point(116, 230);
+            this.btn_addmit.Location = new System.Drawing.Point(530, 218);
             this.btn_addmit.Name = "btn_addmit";
             this.btn_addmit.Size = new System.Drawing.Size(112, 31);
             this.btn_addmit.TabIndex = 50;
@@ -96,12 +97,24 @@
             this.btn_addmit.UseVisualStyleBackColor = true;
             this.btn_addmit.Click += new System.EventHandler(this.btn_addmit_Click);
             // 
+            // button1
+            // 
+            this.button1.ForeColor = System.Drawing.Color.MediumTurquoise;
+            this.button1.Location = new System.Drawing.Point(116, 218);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(66, 31);
+            this.button1.TabIndex = 51;
+            this.button1.Text = "Back";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // AddNewAdmit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Turquoise;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_addmit);
             this.Controls.Add(this.select_patient);
             this.Controls.Add(this.select_room);
@@ -124,5 +137,6 @@
         private System.Windows.Forms.ComboBox select_room;
         private System.Windows.Forms.ComboBox select_patient;
         private System.Windows.Forms.Button btn_addmit;
+        private System.Windows.Forms.Button button1;
     }
 }

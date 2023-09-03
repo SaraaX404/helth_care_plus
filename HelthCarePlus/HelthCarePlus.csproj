@@ -150,6 +150,12 @@
     <Compile Include="ManageAppointment.Designer.cs">
       <DependentUpon>ManageAppointment.cs</DependentUpon>
     </Compile>
+    <Compile Include="ManageBillings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManageBillings.Designer.cs">
+      <DependentUpon>ManageBillings.cs</DependentUpon>
+    </Compile>
     <Compile Include="ManageResources.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -223,6 +229,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ManageAppointment.resx">
       <DependentUpon>ManageAppointment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManageBillings.resx">
+      <DependentUpon>ManageBillings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ManageResources.resx">
       <DependentUpon>ManageResources.cs</DependentUpon>

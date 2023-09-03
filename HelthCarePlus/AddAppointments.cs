@@ -220,5 +220,12 @@ namespace HelthCarePlus
                 MessageBox.Show("Please select patient, doctor, and appointment time.");
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            AdminLanding adminLanding = new AdminLanding();
+            adminLanding.Show();
+            this.Hide();
+        }
     }
 }

@@ -704,6 +704,8 @@ namespace HelthCarePlus
             public string PatientName { get; set; }
             public DateTime AppointmentDate { get; set; }
             public string AppointmentTime { get; set; }
+
+            public string ChargedStatus { get; set; }
         }
 
         public class Admit
@@ -717,6 +719,8 @@ namespace HelthCarePlus
 
             public string ChargedStatus { get; set; }
             public int RoomNumber { get; set; }
+
+            public int Price { get; set; }
            
         }
 
@@ -732,7 +736,7 @@ namespace HelthCarePlus
                     string query = @"
             SELECT a.id, a.patient_id, a.room_id, a.date_admitted, a.charged,
                    p.first_name AS patient_first_name, p.last_name AS patient_last_name,
-                   r.room_number, r.ac
+                   r.room_number, r.ac, r.price
             FROM admits AS a
             JOIN patient AS p ON a.patient_id = p.id
             JOIN room AS r ON a.room_id = r.id";
@@ -751,7 +755,7 @@ namespace HelthCarePlus
                             string patientLastName = reader["patient_last_name"].ToString();
                             int roomNumber = Convert.ToInt32(reader["room_number"]);
                             int roomAC = Convert.ToInt32(reader["ac"]);
-
+                            int price = Convert.ToInt32(reader["price"]); 
                             string chargedStatus = charged == 0 ? "Pending" : "Done";
 
                             Admit admit = new Admit
@@ -763,6 +767,7 @@ namespace HelthCarePlus
                                 PatientFirstName = patientFirstName,
                                 PatientLastName = patientLastName,
                                 RoomNumber = roomNumber,
+                                Price = price
                             };
 
                             admits.Add(admit);
@@ -778,6 +783,67 @@ namespace HelthCarePlus
 
             return admits;
         }
+
+        public Admit GetAdmitById(int admitId)
+        {
+            Admit admit = null;
+
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = @"
+                SELECT a.id, a.patient_id, a.room_id, a.date_admitted, a.charged,
+                       p.first_name AS patient_first_name, p.last_name AS patient_last_name,
+                       r.room_number, r.ac, r.price
+                FROM admits AS a
+                JOIN patient AS p ON a.patient_id = p.id
+                JOIN room AS r ON a.room_id = r.id
+                WHERE a.id = @admitId"; // Use a parameter for the admitId
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@admitId", admitId); // Add the parameter
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            // Parse the data as before
+                            int patientId = Convert.ToInt32(reader["patient_id"]);
+                            int roomId = Convert.ToInt32(reader["room_id"]);
+                            DateTime dateAdmitted = Convert.ToDateTime(reader["date_admitted"]);
+                            int charged = Convert.ToInt32(reader["charged"]);
+                            string patientFirstName = reader["patient_first_name"].ToString();
+                            string patientLastName = reader["patient_last_name"].ToString();
+                            int roomNumber = Convert.ToInt32(reader["room_number"]);
+                            int roomAC = Convert.ToInt32(reader["ac"]);
+                            int price = Convert.ToInt32(reader["price"]);
+                            string chargedStatus = charged == 0 ? "Pending" : "Done";
+
+                            admit = new Admit
+                            {
+                                Id = admitId,
+                                PatientId = patientId,
+                                DateAdmitted = dateAdmitted,
+                                ChargedStatus = chargedStatus, // Use the mapped value
+                                PatientFirstName = patientFirstName,
+                                PatientLastName = patientLastName,
+                                RoomNumber = roomNumber,
+                                Price = price
+                            };
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+
+            return admit;
+        }
+
 
         public List<KeyValuePair<int, string>> GetPatientDataForComboBox()
         {
@@ -884,9 +950,17 @@ namespace HelthCarePlus
                 {
                     connection.Open();
                     string query = @"
-                SELECT a.id, a.patient_id, a.doctor_id, a.date, a.time, p.first_name as patient_first_name,p.last_name as patient_last_name, d.first_name as doctor_first_name, d.last_name as doctor_last_name FROM appointment AS a
-                JOIN patient AS p ON a.patient_id = p.id
-                JOIN doctor AS d ON a.doctor_id = d.id";
+    SELECT a.id, a.patient_id, a.doctor_id, a.date, a.time, 
+           p.first_name as patient_first_name, p.last_name as patient_last_name, 
+           d.first_name as doctor_first_name, d.last_name as doctor_last_name,
+           CASE
+               WHEN a.charged = '0' THEN 'Pending'
+               WHEN a.charged = '1' THEN 'Done'
+               ELSE 'Unknown'
+           END as ChargedStatus
+    FROM appointment AS a
+    JOIN patient AS p ON a.patient_id = p.id
+    JOIN doctor AS d ON a.doctor_id = d.id"; 
                     MySqlCommand command = new MySqlCommand(query, connection);
 
                     using (MySqlDataReader reader = command.ExecuteReader())
@@ -900,9 +974,10 @@ namespace HelthCarePlus
                             string appointmentTime = reader["time"].ToString();
                             string patientName = reader["patient_first_name"].ToString() + " " + reader["patient_last_name"].ToString();
                             string doctorName = reader["doctor_first_name"].ToString() + " " + reader["doctor_last_name"].ToString();
+                            string ChanrgedStatus = reader["ChargedStatus"].ToString();
 
 
-                            
+                          
 
                             Appointment appointment = new Appointment
                             {
@@ -911,7 +986,8 @@ namespace HelthCarePlus
                                 AppointmentDate = appointmentDate.Date,
                                 AppointmentTime = appointmentTime,
                                 PatientName = patientName,
-                                DoctorName = doctorName
+                                DoctorName = doctorName,
+                                ChargedStatus = ChanrgedStatus
                             };
 
                             appointments.Add(appointment);
@@ -926,6 +1002,116 @@ namespace HelthCarePlus
             }
 
             return appointments;
+        }
+
+        public Appointment GetAppointmentById(int appointmentId)
+        {
+            Appointment appointment = null;
+
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = @"
+                SELECT a.id, a.patient_id, a.doctor_id, a.date, a.time, 
+           p.first_name as patient_first_name, p.last_name as patient_last_name, 
+           d.first_name as doctor_first_name, d.last_name as doctor_last_name,
+           CASE
+               WHEN a.charged = '0' THEN 'Pending'
+               WHEN a.charged = '1' THEN 'Done'
+               ELSE 'Unknown'
+           END as ChargedStatus
+    FROM appointment AS a
+    JOIN patient AS p ON a.patient_id = p.id
+    JOIN doctor AS d ON a.doctor_id = d.id
+                WHERE a.id = @appointmentId"; // Use a parameter for the appointmentId
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@appointmentId", appointmentId); // Add the parameter
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            int patientId = Convert.ToInt32(reader["patient_id"]);
+                            int doctorId = Convert.ToInt32(reader["doctor_id"]);
+                            DateTime appointmentDate = Convert.ToDateTime(reader["date"]);
+                            string appointmentTime = reader["time"].ToString();
+                            string patientName = reader["patient_first_name"].ToString() + " " + reader["patient_last_name"].ToString();
+                            string doctorName = reader["doctor_first_name"].ToString() + " " + reader["doctor_last_name"].ToString();
+                            string ChanrgedStatus = reader["ChargedStatus"].ToString();
+
+                            appointment = new Appointment
+                            {
+                                Id = appointmentId,
+                                AppointmentDate = appointmentDate.Date,
+                                AppointmentTime = appointmentTime,
+                                PatientName = patientName,
+                                DoctorName = doctorName,
+                                ChargedStatus = ChanrgedStatus
+                            };
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+
+            return appointment;
+        }
+
+        public bool UpdateAppointmentChargedStatusById(int appointmentId)
+        {
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "UPDATE appointment SET charged = 1 WHERE id = @appointmentId";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@appointmentId", appointmentId);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // Check if any rows were affected (1 means success, 0 means no matching appointment found)
+                    return rowsAffected > 0;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    Console.WriteLine(ex.ToString());
+                    return false; // Return false to indicate an error occurred
+                }
+            }
+        }
+
+
+        public bool UpdateAdmitChargedStatusById(int admitId)
+        {
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "UPDATE admits SET charged = 1 WHERE id = @admitId";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@admitId", admitId);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // Check if any rows were affected (1 means success, 0 means no matching admit found)
+                    return rowsAffected > 0;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    Console.WriteLine(ex.ToString());
+                    return false; // Return false to indicate an error occurred
+                }
+            }
         }
 
 

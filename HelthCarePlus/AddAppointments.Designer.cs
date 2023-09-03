@@ -39,6 +39,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxAppointmentTime = new System.Windows.Forms.ComboBox();
             this.lblwarning = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label3
@@ -112,7 +113,7 @@
             // 
             this.button1.BackColor = System.Drawing.Color.MediumTurquoise;
             this.button1.ForeColor = System.Drawing.Color.Honeydew;
-            this.button1.Location = new System.Drawing.Point(112, 266);
+            this.button1.Location = new System.Drawing.Point(530, 270);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(162, 31);
             this.button1.TabIndex = 47;
@@ -151,12 +152,25 @@
             this.lblwarning.TabIndex = 51;
             this.lblwarning.Text = "This Doctor is not available at that day, choose a different date";
             // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.MediumTurquoise;
+            this.button2.ForeColor = System.Drawing.Color.Honeydew;
+            this.button2.Location = new System.Drawing.Point(112, 283);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(70, 31);
+            this.button2.TabIndex = 52;
+            this.button2.Text = "Back";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // AddAppointments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Turquoise;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.lblwarning);
             this.Controls.Add(this.comboBoxAppointmentTime);
             this.Controls.Add(this.label2);
@@ -189,5 +203,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxAppointmentTime;
         private System.Windows.Forms.Label lblwarning;
+        private System.Windows.Forms.Button button2;
     }
 }

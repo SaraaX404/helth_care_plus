@@ -79,5 +79,13 @@ namespace HelthCarePlus
             manageResources.Show();
             this.Hide();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ManageBillings manageBillings = new ManageBillings();
+            manageBillings.Show();
+            this.Hide();
+                 
+        }
     }
 }

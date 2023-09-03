@@ -71,5 +71,12 @@ namespace HelthCarePlus
 
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AdminLanding adminLanding = new AdminLanding();
+            adminLanding.Show();
+            this.Hide();
+        }
     }
 }

@@ -42,5 +42,12 @@ namespace HelthCarePlus
                 grid_resources.DataSource = data;
             }
         }
+
+        private void back_Click(object sender, EventArgs e)
+        {
+            AdminLanding adminLanding = new AdminLanding();
+            adminLanding.Show();
+            this.Hide();
+        }
     }
 }
